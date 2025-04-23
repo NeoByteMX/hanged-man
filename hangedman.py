@@ -1,19 +1,19 @@
-#Version 25.2304.+850
+#Version 25.2304.+855
 
-import  random #Modulo para seleccionar aleatorios
-import os   #Modulo para interactuar con el sistema
-import json #Modulo para leer archivos json
+import random #Module for selecting random items
+import os   #Module for interacting with the system
+import json #Module for reading json files
 
-#función para leer el archivo json y regresar el diccionario de palabras
-def load_words_from_json(filepath="words.json"): #Define la función, requiere la ruta del archivo como input.
-    with open(filepath, 'r') as f:#abre el archivo en la ruta indicada como lectura como f(file)
-        words_dictionary = json.load(f) #Crea la variable diccionario de palabras, lee el archivo json
-    return words_dictionary #Retorna el diccionario de palabras
+#Function to read the json file and return the dictionary of words
+def load_words_from_json(filepath="words.json"): #Defines the function, requires the file path as input.
+    with open(filepath, 'r') as f: #Opens the file at the indicated path in read mode as f(file)
+        words_dictionary = json.load(f) #Creates the words dictionary variable, reads the json file
+    return words_dictionary #Returns the dictionary of words
 
-#Función para correr el juego
+#Function to run the game
 def run():
-    words = load_words_from_json("words.json") #Carga la función para crear el diccionario y la guarda en una variable
-    # Muñeco de ahorcado que se imprimirá
+    words = load_words_from_json("words.json") #Loads the function to create the dictionary and saves it in a variable
+    # Hangman figure that will be printed
     images = [r'''
       +---+
       |   |
@@ -65,40 +65,40 @@ def run():
           |
     =========''']
 
-    word = random.choice(words) #Palabra que se escoge de la base de datos aleatoriamente
-    spaces = ["_"] * len(word) #Imprime los espacios en lugar de la palabra
-    attemps = 0 #número de intentos con base en la cantdiad de muñecos
-    user_letters = []
+    word = random.choice(words) #Word that is randomly chosen from the database
+    spaces = ["_"] * len(word) #Creates a list of underscores representing the word's length
+    attemps = 0 #Number of attempts
+    user_letters = [] #Create a list of letters used
 
 
-    while True: #Bucle para comenza el juego
-        os.system("cls") #limpria la pantalla
-        for character in spaces: #Buque que imprime los caracteres
-            print(character, end=" ") #Imprimer los caracteres sin slato de linea, end permite usar espacio en su lugar
-        print(images[attemps]) #Dibuja el mueño ahorcado
-        letter = input("Elige una letra: \n").upper() #Lee la letra que ingresa el jugador
+    while True: #Loop to start the game
+        os.system("cls") #Clears the screen
+        for character in spaces: #Loop that prints the characters
+            print(character, end=" ") #Prints the characters without a newline, end allows using a space instead
+        print(images[attemps]) #Draws the hangman figure
+        letter = input("Elige una letra: \n").upper() #Reads the letter entered by the player
 
         if letter in user_letters:
             print(f"Ya has usado la {letter}")
         else:
             user_letters.append(letter)
 
-        found = False #Variable de letra encontrada
-        for idx, character in enumerate(word): #revisa el indice y cada caracter en la palabra
-            if character == letter: # Valida si el caracter es igual a la letra del jugador
-                spaces[idx] = letter #reemplaza un espacio por la letra
-                found = True #cambia la variable de busqueda a verdadero
+        found = False #Letter found variable
+        for idx, character in enumerate(word): #Checks the index and each character in the word
+            if character == letter: #Validates if the character is equal to the player's letter
+                spaces[idx] = letter #Replaces a space with the letter
+                found = True #Changes the found variable to true
 
-        if not found: # Si no se encuentra suma un intento
+        if not found: #If not found, adds an attempt
             attemps += 1
 
-        if "_" not in spaces: #Valida que no queden espacios al encontrar la palabra
+        if "_" not in spaces: #Validates that no spaces remain when the word is found
             os.system("cls")
             print(f'La palabra es {word.lower()}')
             print("🎉 Felicides ¡Ganaste! 🎉")
             break
 
-        if attemps == 6: #Valida si el número de intentos máximos es alncanzado
+        if attemps == 6: #Validates if the maximum number of attempts is reached
             os.system("cls")
             print("💀 Has Perdido 💀")
             print(f'La palabra era {word.lower()}')
