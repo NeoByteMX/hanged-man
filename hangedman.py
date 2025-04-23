@@ -105,7 +105,7 @@ def run():
 
             if "_" not in spaces:  # Validates that no spaces remain when the word is found
                 os.system(clear)
-                print(f'La palabra es {word.lower()}')
+                print(f'La palabra es {word}')
                 print("🎉 Felicides ¡Ganaste! 🎉\n")
                 restart_game()
                 break
@@ -113,7 +113,7 @@ def run():
             if attemps == 6:  # Validates if the maximum number of attempts is reached
                 os.system(clear)
                 print("💀 Has Perdido 💀")
-                print(f'La palabra era {word.lower()}\n')
+                print(f'La palabra era {word}\n')
                 restart_game()
                 break
 
