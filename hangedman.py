@@ -17,7 +17,7 @@ def os_system_clear():#Defines the function to set clear
 
 #Function to restart the game
 def restart_game():
-    input("Presiona cualquier tecla para comenzar a jugar")
+    input("Presiona cualquier tecla para jugar de nuevo...\n")
     run()
 
 #Function to run the game
