@@ -4,7 +4,6 @@ import random #Module for selecting random items
 import os   #Module for interacting with the system
 import json #Module for reading json files
 
-
 #Function to read the json file and return the dictionary of words
 def load_words_from_json(filepath="words.json"): #Defines the function, requires the file path as input.
     with open(filepath, 'r') as f: #Opens the file at the indicated path in read mode as f(file)
@@ -15,6 +14,11 @@ def os_system_clear():#Defines the function to set clear
     system = os.name #Detect the os name
     clear = "cls" if system == "nt" else "clear" #Set cls for windows and clear for other os
     return clear #return the clear string according the os system
+
+#Function to restart the game
+def restart_game():
+    input("Presiona cualquier tecla para comenzar a jugar")
+    run()
 
 #Function to run the game
 def run():
@@ -102,13 +106,15 @@ def run():
             if "_" not in spaces:  # Validates that no spaces remain when the word is found
                 os.system(clear)
                 print(f'La palabra es {word.lower()}')
-                print("🎉 Felicides ¡Ganaste! 🎉")
+                print("🎉 Felicides ¡Ganaste! 🎉\n")
+                restart_game()
                 break
 
             if attemps == 6:  # Validates if the maximum number of attempts is reached
                 os.system(clear)
                 print("💀 Has Perdido 💀")
-                print(f'La palabra era {word.lower()}')
+                print(f'La palabra era {word.lower()}\n')
+                restart_game()
                 break
 
 if __name__ == '__main__':
