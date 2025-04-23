@@ -1,3 +1,5 @@
+#Version 25.2304.+850
+
 import  random #Modulo para seleccionar aleatorios
 import os   #Modulo para interactuar con el sistema
 import json #Modulo para leer archivos json
