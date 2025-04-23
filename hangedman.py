@@ -1,8 +1,16 @@
 import  random #Modulo para seleccionar aleatorios
 import os   #Modulo para interactuar con el sistema
+import json #Modulo para leer archivos json
+
+#función para leer el archivo json y regresar el diccionario de palabras
+def load_words_from_json(filepath="words.json"): #Define la función, requiere la ruta del archivo como input.
+    with open(filepath, 'r') as f:#abre el archivo en la ruta indicada como lectura como f(file)
+        words_dictionary = json.load(f) #Crea la variable diccionario de palabras, lee el archivo json
+    return words_dictionary #Retorna el diccionario de palabras
 
 #Función para correr el juego
 def run():
+    words = load_words_from_json("words.json") #Carga la función para crear el diccionario y la guarda en una variable
     # Muñeco de ahorcado que se imprimirá
     images = [r'''
       +---+
@@ -55,18 +63,11 @@ def run():
           |
     =========''']
 
-    # Base de datos de palabras posibles
-    DB = [
-        "C",
-        "PYTHON",
-        "JAVASCRIPT",
-        "JAVA",
-        "PHP"
-    ]
-
-    word = random.choice(DB) #Palabra que se escoge de la base de datos aleatoriamente
+    word = random.choice(words) #Palabra que se escoge de la base de datos aleatoriamente
     spaces = ["_"] * len(word) #Imprime los espacios en lugar de la palabra
     attemps = 0 #número de intentos con base en la cantdiad de muñecos
+    user_letters = []
+
 
     while True: #Bucle para comenza el juego
         os.system("cls") #limpria la pantalla
@@ -74,6 +75,11 @@ def run():
             print(character, end=" ") #Imprimer los caracteres sin slato de linea, end permite usar espacio en su lugar
         print(images[attemps]) #Dibuja el mueño ahorcado
         letter = input("Elige una letra: \n").upper() #Lee la letra que ingresa el jugador
+
+        if letter in user_letters:
+            print(f"Ya has usado la {letter}")
+        else:
+            user_letters.append(letter)
 
         found = False #Variable de letra encontrada
         for idx, character in enumerate(word): #revisa el indice y cada caracter en la palabra
@@ -86,8 +92,8 @@ def run():
 
         if "_" not in spaces: #Valida que no queden espacios al encontrar la palabra
             os.system("cls")
+            print(f'La palabra es {word.lower()}')
             print("🎉 Felicides ¡Ganaste! 🎉")
-            print(f'La palabra era {word.lower()}')
             break
 
         if attemps == 6: #Valida si el número de intentos máximos es alncanzado
