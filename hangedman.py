@@ -1,8 +1,10 @@
-#Version 25.2304.+855
+#Version 25.2304.+1011
 
 import random #Module for selecting random items
 import os   #Module for interacting with the system
 import json #Module for reading json files
+from itertools import repeat
+
 
 #Function to read the json file and return the dictionary of words
 def load_words_from_json(filepath="words.json"): #Defines the function, requires the file path as input.
@@ -69,40 +71,41 @@ def run():
     spaces = ["_"] * len(word) #Creates a list of underscores representing the word's length
     attemps = 0 #Number of attempts
     user_letters = [] #Create a list of letters used
-
+    repeat_letter = ""
 
     while True: #Loop to start the game
         os.system("cls") #Clears the screen
         for character in spaces: #Loop that prints the characters
             print(character, end=" ") #Prints the characters without a newline, end allows using a space instead
         print(images[attemps]) #Draws the hangman figure
-        letter = input("Elige una letra: \n").upper() #Reads the letter entered by the player
+        print(repeat_letter)
 
+        letter = input("Elige una letra: \n").upper() #Reads the letter entered by the player
         if letter in user_letters:
-            print(f"Ya has usado la {letter}")
+            repeat_letter = f"Ya has usado la {letter}"
         else:
             user_letters.append(letter)
+            found = False  # Letter found variable
+            for idx, character in enumerate(word):  # Checks the index and each character in the word
+                if character == letter:  # Validates if the character is equal to the player's letter
+                    spaces[idx] = letter  # Replaces a space with the letter
+                    found = True  # Changes the found variable to true
 
-        found = False #Letter found variable
-        for idx, character in enumerate(word): #Checks the index and each character in the word
-            if character == letter: #Validates if the character is equal to the player's letter
-                spaces[idx] = letter #Replaces a space with the letter
-                found = True #Changes the found variable to true
+            if not found:  # If not found, adds an attempt
+                attemps += 1
 
-        if not found: #If not found, adds an attempt
-            attemps += 1
+            if "_" not in spaces:  # Validates that no spaces remain when the word is found
+                os.system("cls")
+                print(f'La palabra es {word.lower()}')
+                print("🎉 Felicides ¡Ganaste! 🎉")
+                break
 
-        if "_" not in spaces: #Validates that no spaces remain when the word is found
-            os.system("cls")
-            print(f'La palabra es {word.lower()}')
-            print("🎉 Felicides ¡Ganaste! 🎉")
-            break
+            if attemps == 6:  # Validates if the maximum number of attempts is reached
+                os.system("cls")
+                print("💀 Has Perdido 💀")
+                print(f'La palabra era {word.lower()}')
+                break
 
-        if attemps == 6: #Validates if the maximum number of attempts is reached
-            os.system("cls")
-            print("💀 Has Perdido 💀")
-            print(f'La palabra era {word.lower()}')
-            break
 
 if __name__ == '__main__':
     run()
