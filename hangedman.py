@@ -3,7 +3,6 @@
 import random #Module for selecting random items
 import os   #Module for interacting with the system
 import json #Module for reading json files
-from itertools import repeat
 
 
 #Function to read the json file and return the dictionary of words
