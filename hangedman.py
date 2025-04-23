@@ -10,6 +10,11 @@ def load_words_from_json(filepath="words.json"): #Defines the function, requires
     with open(filepath, 'r') as f: #Opens the file at the indicated path in read mode as f(file)
         words_dictionary = json.load(f) #Creates the words dictionary variable, reads the json file
     return words_dictionary #Returns the dictionary of words
+#Function to detect the os system and set clear
+def os_system_clear():#Defines the function to set clear
+    system = os.name #Detect the os name
+    clear = "cls" if system == "nt" else "clear" #Set cls for windows and clear for other os
+    return clear #return the clear string according the os system
 
 #Function to run the game
 def run():
@@ -72,7 +77,8 @@ def run():
     user_letters = [] #Create a list of letters used
     repeat_letter = ""
     while True: #Loop to start the game
-        os.system("cls") #Clears the screen
+        clear = os_system_clear()
+        os.system(clear) #Clears the screen
         for character in spaces: #Loop that prints the characters
             print(character, end=" ") #Prints the characters without a newline, end allows using a space instead
         print(images[attemps]) #Draws the hangman figure
@@ -94,13 +100,13 @@ def run():
                 attemps += 1
 
             if "_" not in spaces:  # Validates that no spaces remain when the word is found
-                os.system("cls")
+                os.system(clear)
                 print(f'La palabra es {word.lower()}')
                 print("🎉 Felicides ¡Ganaste! 🎉")
                 break
 
             if attemps == 6:  # Validates if the maximum number of attempts is reached
-                os.system("cls")
+                os.system(clear)
                 print("💀 Has Perdido 💀")
                 print(f'La palabra era {word.lower()}')
                 break
