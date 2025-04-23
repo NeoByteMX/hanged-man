@@ -71,7 +71,6 @@ def run():
     attemps = 0 #Number of attempts
     user_letters = [] #Create a list of letters used
     repeat_letter = ""
-
     while True: #Loop to start the game
         os.system("cls") #Clears the screen
         for character in spaces: #Loop that prints the characters
@@ -83,6 +82,7 @@ def run():
         if letter in user_letters:
             repeat_letter = f"Ya has usado la {letter}"
         else:
+            repeat_letter = ""
             user_letters.append(letter)
             found = False  # Letter found variable
             for idx, character in enumerate(word):  # Checks the index and each character in the word
@@ -104,7 +104,6 @@ def run():
                 print("💀 Has Perdido 💀")
                 print(f'La palabra era {word.lower()}')
                 break
-
 
 if __name__ == '__main__':
     run()
